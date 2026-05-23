@@ -1,109 +1,109 @@
 # HTML Design Handoff
 
-HTML Design Handoff turns plain HTML prototypes into local, Figma-like handoff pages. It is meant for teams that sketch product screens in HTML and want frontend developers to inspect layout, text, spacing, color, and element bounds without opening Figma, Mockplus, or a browser devtools-heavy workflow.
+HTML Design Handoff 可以把普通 HTML 原型转换成本地可打开的、类似 Figma Inspect 的设计交付页面。它适合这样的团队：产品或业务同学先用 HTML 做界面原型，然后希望前端开发可以直接查看布局、文字、间距、颜色和元素尺寸，而不必再把原型重新画到 Figma、慕客或其他设计工具里。
 
-## What It Generates
+## 这个工具会生成什么
 
-For every `.html` file in the project root, the tool creates a standalone file in `handoff/`:
+工具会扫描项目根目录下的 `.html` 文件，并在 `handoff/` 目录里生成独立的交付文件：
 
-- `handoff/index.html`: an entry page for all generated handoff pages
-- `handoff/*-handoff.html`: one inspectable handoff page per source HTML file
+- `handoff/index.html`：所有交付页面的入口
+- `handoff/*-handoff.html`：每个源 HTML 对应的可检查标注页面
 
-Each handoff page includes:
+每个标注页面包含：
 
-- a layer tree for visible DOM elements
-- an iframe preview of the original HTML
-- click-to-select element inspection
-- Chinese design specs for width, height, text, font, line height, color, opacity, spacing, and CSS snippets
-- red measurement guides for selected elements
-- inspect mode and interaction mode, so interactive prototypes can still be clicked
-- a `Specs JSON` export for frontend or design-data comparison
+- 可见 DOM 元素的图层树
+- 原始 HTML 的 iframe 预览
+- 点击元素后查看标注信息
+- 中文设计规格，包括宽高、文字、字体、行高、颜色、不透明度、间距和 CSS 片段
+- 选中元素时的红色测量辅助线
+- 标注模式和交互模式，交互型原型也可以正常点击
+- `Specs JSON` 导出，方便前端使用或和设计工具数据做对比
 
-## Requirements
+## 环境要求
 
-- Node.js 18 or newer
+- Node.js 18 或更高版本
 - npm
 
-No browser extension, design platform account, or paid design tool is required.
+不需要浏览器插件，不需要设计平台账号，也不需要付费设计工具。
 
-## Install
+## 安装
 
 ```bash
 npm install
 ```
 
-## Usage
+## 使用方法
 
-Put your source HTML files in the project root, then run:
+把你的源 HTML 文件放到项目根目录，然后运行：
 
 ```bash
 npm run build
 ```
 
-Open the generated entry file:
+生成后打开入口文件：
 
 ```text
 handoff/index.html
 ```
 
-Or open a specific generated page:
+也可以直接打开某个具体页面：
 
 ```text
 handoff/your-page-handoff.html
 ```
 
-## Recommended Workflow
+## 推荐工作流
 
-1. Create or export your HTML prototype.
-2. Place the `.html` file in the project root.
-3. Run `npm run build`.
-4. Send the generated `handoff/` files to frontend developers.
-5. Developers open the generated handoff HTML locally and inspect the page like a lightweight Figma Inspect view.
+1. 创建或导出 HTML 原型。
+2. 把 `.html` 文件放到项目根目录。
+3. 运行 `npm run build`。
+4. 把生成的 `handoff/` 文件交给前端开发。
+5. 前端在本地打开生成的 handoff HTML，就可以像使用轻量版 Figma Inspect 一样查看标注。
 
-## HTML Authoring Tips
+## HTML 编写建议
 
-The tool reads real browser layout data, so better HTML produces better specs.
+这个工具读取的是浏览器真实渲染后的 DOM 和 CSS 布局数据，所以 HTML 写得越规范，标注越准确。
 
-- Give important modules clear class names.
-- Keep key text in its own element when it needs independent inspection.
-- Set explicit `font-size` and `line-height` for important text.
-- Avoid putting too many visual responsibilities on one large wrapper element.
-- Use real spacing with CSS margin, padding, flex, or grid instead of visual-only screenshots.
-- Keep interactions as normal links, buttons, or JavaScript events so interaction mode can preserve them.
+- 给重要模块添加清晰的 class 名。
+- 需要单独标注的关键文字，尽量放在独立元素里。
+- 重要文字建议显式设置 `font-size` 和 `line-height`。
+- 避免一个很大的 wrapper 元素承担太多视觉职责。
+- 使用真实的 CSS margin、padding、flex、grid 表达间距，不要只依赖截图式视觉效果。
+- 原型交互尽量使用正常的链接、按钮或 JavaScript 事件，这样交互模式可以保留原始点击行为。
 
-## Modes
+## 模式说明
 
-`标注模式` is for design inspection. Click elements to view specs.
+`标注模式` 用于查看设计标注。点击页面元素后，右侧会显示对应规格。
 
-`交互模式` lets clicks pass through to the original HTML, so prototype links and buttons can work normally.
+`交互模式` 会把点击事件交还给原始 HTML，因此原型里的按钮、链接和跳转可以正常工作。
 
-## Units
+## 单位说明
 
-Visible specs use CSS `px`, which is the unit frontend developers usually implement directly.
+页面中可见的标注默认使用 CSS `px`，这是前端开发通常可以直接实现的单位。
 
-The exported `Specs JSON` can also include scaled design data for comparison with tools that use 2x design canvases, but the main UI intentionally shows one clear unit.
+导出的 `Specs JSON` 可以保留用于和 2x 设计画布对比的数据，但主界面会尽量只展示一套清晰的单位，避免前端误解。
 
-## Scripts
+## 常用命令
 
 ```bash
 npm run build
 npm test
 ```
 
-## What This Is Good For
+## 适合解决什么问题
 
-- turning AI-generated HTML prototypes into developer-readable handoff files
-- reducing manual redraw work in Figma or Mockplus
-- sharing inspectable local specs with frontend engineers
-- checking whether generated HTML contains enough design information for implementation
+- 把 AI 生成的 HTML 原型变成前端可阅读的本地交付文件
+- 减少把 HTML 原型重新画到 Figma 或慕客里的重复工作
+- 给前端提供可点击、可检查、可复制规格的页面
+- 检查当前 HTML 原型是否包含足够的开发实现信息
 
-## Current Limitations
+## 当前限制
 
-- It cannot recover design intent that is missing from the HTML. If the source HTML has no explicit line height, the tool can only estimate it from browser-rendered layout.
-- It reads DOM/CSS layout, not original design-tool layers.
-- Very complex animations or canvas-rendered UIs may not expose useful element-level specs.
-- Generated specs are best treated as developer handoff guidance, not as a replacement for a mature design system.
+- 工具无法恢复 HTML 中不存在的设计意图。例如源 HTML 没有明确设置行高时，工具只能基于浏览器渲染结果估算。
+- 工具读取的是 DOM 和 CSS 布局，不是原始设计软件里的图层数据。
+- 很复杂的动画或 canvas 渲染界面，可能无法提供足够细的元素级标注。
+- 生成结果更适合作为开发交付辅助，而不是完整替代成熟设计系统。
 
-## License
+## 开源协议
 
 MIT
