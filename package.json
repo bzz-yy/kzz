@@ -1,0 +1,18 @@
+{
+  "name": "html-design-handoff",
+  "version": "0.1.0",
+  "description": "Generate local Figma-like design handoff pages from plain HTML prototypes.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build": "node src/build-handoff.mjs"
+  },
+  "keywords": [
+    "html",
+    "handoff",
+    "design",
+    "figma",
+    "inspect"
+  ]
+}
